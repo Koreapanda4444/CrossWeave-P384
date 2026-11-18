@@ -17,4 +17,5 @@
 | 1 | `c8eb5d82b167d1b065057f27614ac780d3cdfaae` | 명세 계획 1..36 연속·고정 대상·범위 확인; 빌드 미구현; 기존 원격 보존 |
 | 2 | `c16aaf73ccb5b0c647d684417d0c41357fa2f975` | Release clean configure/build; CTest 환경 smoke 1/1; GCC 14.2·OpenSSL 3.5.7·8bit byte·uint64 확인 |
 | 3 | `87cee07f693f015f56efb09c87ade55ce0a2ad01` | CTest 2/2; 비정렬 LE64·회전0/1/63/64·주소 overflow·경계 overlap·소거 메모리 확인 |
-| 4 | 이 행을 포함한 커밋 | CTest 3/3; SHAKE 빈입력 KAT·15개 Python/OpenSSL 대조; 실제 EVP 초기화/비XOF 종료 실패 경로 확인 |
+| 4 | `f1c390502540a3ce7f1a662df7143e9ecb50cd37` | CTest 3/3; SHAKE 빈입력 KAT·15개 Python/OpenSSL 대조; 실제 EVP 초기화/비XOF 종료 실패 경로 확인 |
+| 5 | 이 행을 포함한 커밋 | CTest 5/5; RC32개+IV 272B 전체 배열·생성기·Python/OpenSSL 일치; NUL·잘못된 IV 도메인 음성 대조 |

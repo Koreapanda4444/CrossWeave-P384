@@ -31,4 +31,6 @@ static inline int cw_overlap(cw_range a, cw_range b) {
     return a.first != a.end && b.first != b.end && a.first < b.end && b.first < a.end;
 }
 void cw_clean(void *p, size_t n);
+extern const uint64_t cw_rc[16][2];
+extern const uint8_t cw_iv[16];
 #endif
