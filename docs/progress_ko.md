@@ -24,4 +24,5 @@
 | 8 | `b596494af96c801ecd7c3b8f6afc1a0805104885` | CTest 8/8; r0/11/15 중간 상태12개·P12/P16 8개 독립 대조·규범 zero KAT 일치 |
 | 9 | `cc15ed4e2ba9c4df49577764d567e1f500e61024` | CTest 9/9; 8상태×17prefix C/Python 정·역변환과 양방향 복원; 역순열은 테스트 target에만 연결 |
 | 10 | `944b07e9778b2cd5ce67fcbc2c9ae09211dacf57` | CTest 10/10; zero/ff/증가/80 상태8개 고정 KAT; C·독립 oracle 일치; 테스트 전후 vectors.json 불변 |
-| 11 | 이 행을 포함한 커밋 | CTest 11/11; 공개 P12/P16 KAT·정확한 in-place·양방향 부분 overlap·길이/capacity/NULL/주소overflow·실패/여유영역 불변 |
+| 11 | `3be2a695119bfd8c419f7c65056f9bae772f956a` | CTest 11/11; 공개 P12/P16 KAT·정확한 in-place·양방향 부분 overlap·길이/capacity/NULL/주소overflow·실패/여유영역 불변 |
+| 12 | 이 행을 포함한 커밋 | CTest 12/12; 1004상태 P12/P16+80상태×17prefix; C/Python 정·역변환 및 양방향 복원 총13472개 대조 |
