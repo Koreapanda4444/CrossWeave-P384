@@ -23,4 +23,5 @@
 | 7 | `1c20ff18a33c981865e6c2cc4d4b96fcea55cbb0` | CTest 7/7; 216개 lane 중간값 C/Python 일치·overflow 입력·동시 갱신 음성 대조 |
 | 8 | `b596494af96c801ecd7c3b8f6afc1a0805104885` | CTest 8/8; r0/11/15 중간 상태12개·P12/P16 8개 독립 대조·규범 zero KAT 일치 |
 | 9 | `cc15ed4e2ba9c4df49577764d567e1f500e61024` | CTest 9/9; 8상태×17prefix C/Python 정·역변환과 양방향 복원; 역순열은 테스트 target에만 연결 |
-| 10 | 이 행을 포함한 커밋 | CTest 10/10; zero/ff/증가/80 상태8개 고정 KAT; C·독립 oracle 일치; 테스트 전후 vectors.json 불변 |
+| 10 | `944b07e9778b2cd5ce67fcbc2c9ae09211dacf57` | CTest 10/10; zero/ff/증가/80 상태8개 고정 KAT; C·독립 oracle 일치; 테스트 전후 vectors.json 불변 |
+| 11 | 이 행을 포함한 커밋 | CTest 11/11; 공개 P12/P16 KAT·정확한 in-place·양방향 부분 overlap·길이/capacity/NULL/주소overflow·실패/여유영역 불변 |

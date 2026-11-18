@@ -25,3 +25,25 @@ void cw_permute(uint8_t bytes[48], unsigned rounds) {
     for(unsigned i=0;i<6;++i) cw_store64(bytes+8u*i,s[i]);
     cw_clean(s,sizeof s);
 }
+
+static crossweave_status fixed_permutation(uint8_t *out, size_t cap,
+        const uint8_t *in, size_t len, unsigned rounds) {
+    cw_range output,input;
+    if(len!=48u) return CROSSWEAVE_ELENGTH;
+    if(cap<48u) return CROSSWEAVE_ECAPACITY;
+    if(out==NULL || in==NULL) return CROSSWEAVE_EINVAL;
+    if(!cw_make_range(out,48,&output) || !cw_make_range(in,48,&input))
+        return CROSSWEAVE_EINVAL;
+    if(out!=in && cw_overlap(output,input)) return CROSSWEAVE_EOVERLAP;
+    uint8_t tmp[48];
+    for(size_t i=0;i<48;++i) tmp[i]=in[i];
+    cw_permute(tmp,rounds);
+    for(size_t i=0;i<48;++i) out[i]=tmp[i];
+    cw_clean(tmp,sizeof tmp); return CROSSWEAVE_OK;
+}
+crossweave_status crossweave_p384_12(uint8_t *out, size_t cap, const uint8_t *in, size_t len) {
+    return fixed_permutation(out,cap,in,len,12);
+}
+crossweave_status crossweave_p384_16(uint8_t *out, size_t cap, const uint8_t *in, size_t len) {
+    return fixed_permutation(out,cap,in,len,16);
+}

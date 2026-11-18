@@ -16,6 +16,10 @@ typedef enum {
     CROSSWEAVE_ECAPACITY = 3, CROSSWEAVE_EOVERLAP = 4,
     CROSSWEAVE_ENOMEM = 5, CROSSWEAVE_EAUTH = 7
 } crossweave_status;
+crossweave_status crossweave_p384_12(uint8_t *out, size_t out_capacity,
+    const uint8_t *in, size_t in_len);
+crossweave_status crossweave_p384_16(uint8_t *out, size_t out_capacity,
+    const uint8_t *in, size_t in_len);
 #ifdef __cplusplus
 }
 #endif
