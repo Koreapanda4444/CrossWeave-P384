@@ -20,6 +20,10 @@ crossweave_status crossweave_p384_12(uint8_t *out, size_t out_capacity,
     const uint8_t *in, size_t in_len);
 crossweave_status crossweave_p384_16(uint8_t *out, size_t out_capacity,
     const uint8_t *in, size_t in_len);
+crossweave_status crossweave_encrypt(
+    uint8_t *ciphertext, size_t ciphertext_capacity, uint8_t *tag, size_t tag_capacity,
+    const uint8_t *plaintext, size_t plaintext_len, const uint8_t *ad, size_t ad_len,
+    const uint8_t *nonce, size_t nonce_len, const uint8_t *key, size_t key_len);
 #ifdef __cplusplus
 }
 #endif

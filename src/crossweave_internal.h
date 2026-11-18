@@ -45,4 +45,10 @@ void cw_absorb_ad(uint8_t s[48], const uint8_t *ad, size_t n);
 void cw_message_block(uint8_t s[48], uint8_t *out, const uint8_t *in, size_t n, int decrypt, int full);
 void cw_message(uint8_t s[48], uint8_t *out, const uint8_t *in, size_t n, int decrypt);
 void cw_finalize(uint8_t s[48], uint8_t tag[16], const uint8_t key[16]);
+void *cw_alloc(size_t n);
+void cw_free(void *p, size_t n);
+crossweave_status cw_validate_aead(int decrypt, uint8_t *out, size_t cap,
+    const uint8_t *in, size_t n, const uint8_t *tag, size_t tag_extent,
+    const uint8_t *ad, size_t a, const uint8_t *nonce, size_t nonce_n,
+    const uint8_t *key, size_t key_n);
 #endif

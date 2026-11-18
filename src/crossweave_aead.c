@@ -34,3 +34,21 @@ void cw_finalize(uint8_t s[48], uint8_t tag[16], const uint8_t key[16]) {
     s[47]^=0x31; cw_permute(s,16);
     for(size_t j=0;j<16;++j) tag[j]=(uint8_t)(s[j]^key[j]);
 }
+
+crossweave_status crossweave_encrypt(uint8_t *ciphertext, size_t ciphertext_capacity,
+        uint8_t *tag, size_t tag_capacity, const uint8_t *plaintext, size_t plaintext_len,
+        const uint8_t *ad, size_t ad_len, const uint8_t *nonce, size_t nonce_len,
+        const uint8_t *key, size_t key_len) {
+    crossweave_status status=cw_validate_aead(0,ciphertext,ciphertext_capacity,
+        plaintext,plaintext_len,tag,tag_capacity,ad,ad_len,nonce,nonce_len,key,key_len);
+    if(status!=CROSSWEAVE_OK) return status;
+    uint8_t *tmp=NULL;
+    if(plaintext_len!=0) { tmp=cw_alloc(plaintext_len); if(tmp==NULL) return CROSSWEAVE_ENOMEM; }
+    uint8_t s[48],local_tag[16];
+    cw_initialize(s,key,nonce); cw_absorb_ad(s,ad,ad_len);
+    cw_message(s,tmp,plaintext,plaintext_len,0); cw_finalize(s,local_tag,key);
+    if(plaintext_len!=0) memcpy(ciphertext,tmp,plaintext_len);
+    memcpy(tag,local_tag,16);
+    cw_free(tmp,plaintext_len); cw_clean(local_tag,sizeof local_tag); cw_clean(s,sizeof s);
+    return CROSSWEAVE_OK;
+}
