@@ -26,4 +26,5 @@
 | 10 | `944b07e9778b2cd5ce67fcbc2c9ae09211dacf57` | CTest 10/10; zero/ff/증가/80 상태8개 고정 KAT; C·독립 oracle 일치; 테스트 전후 vectors.json 불변 |
 | 11 | `3be2a695119bfd8c419f7c65056f9bae772f956a` | CTest 11/11; 공개 P12/P16 KAT·정확한 in-place·양방향 부분 overlap·길이/capacity/NULL/주소overflow·실패/여유영역 불변 |
 | 12 | `a3fc25cd335f41097267e402727d25cceaa754cf` | CTest 12/12; 1004상태 P12/P16+80상태×17prefix; C/Python 정·역변환 및 양방향 복원 총13472개 대조 |
-| 13 | 이 행을 포함한 커밋 | 독립 Python AEAD: 명세 빈/17B KAT·태그 거부·정/역 trace 일치·0/16/32B 빈 최종 블록; 순열 oracle 재통과 |
+| 13 | `6d693d7011a9557fb1a45a250e7a080c7c363e94` | 독립 Python AEAD: 명세 빈/17B KAT·태그 거부·정/역 trace 일치·0/16/32B 빈 최종 블록; 순열 oracle 재통과 |
+| 14 | 이 행을 포함한 커밋 | C 초기화·key XOR·AD 0/1/15/16/17/31/32/33B 모든 단계 state 독립 대조; NULL/0 AD 경로·oracle/KAT 회귀 |

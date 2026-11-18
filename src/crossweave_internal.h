@@ -38,4 +38,8 @@ void cw_lane_update(uint64_t s[6], unsigned r, unsigned i);
 void cw_updates(uint64_t s[6], unsigned r);
 void cw_round(uint64_t s[6], unsigned r);
 void cw_permute(uint8_t bytes[48], unsigned rounds);
+void cw_initialize(uint8_t s[48], const uint8_t key[16], const uint8_t nonce[16]);
+void cw_ad_full(uint8_t s[48], const uint8_t block[16]);
+void cw_ad_tail(uint8_t s[48], const uint8_t *tail, size_t n);
+void cw_absorb_ad(uint8_t s[48], const uint8_t *ad, size_t n);
 #endif
