@@ -4,13 +4,24 @@
 소스·이력은 새로 작성한다. 초기화 전 기존 원격 main은
 `d424070e56c9bd08e95dea3b379bf3da8adb17ec`였으며 다른 구현·이력이 있었다.
 초기에는 기존 이력을 보존했고, 이후 사용자 추가 지시로 main 초기화를 승인받았다.
-기존 16개 이력은 backup/pre-reset-20261118 브랜치에 보관했다.
+기존 16개 커밋은 새 main의 조상 이력에서 제외했다.
 부모 없는 새 1번 커밋부터 계획별 main 갱신을 순서대로 수행한다.
 아래 SHA는 게시된 원격 커밋이며 로컬 검증 결과와 연결한다. 원격 CI는 24번 구현 전으로 미실행이다.
 
 각 행은 해당 변경에 포함한 실제 로컬 검증이다. SHA는 다음 변경에서
 확정하며 마지막 행은 그 행을 포함한 커밋의 제목으로 식별한다.
 번호별 SHA는 `git log --reverse --format='%H %s'`로 재현할 수 있다.
+
+## 20번 체크포인트 검증 범위
+
+- Linux x86_64, GCC 14.2.0, OpenSSL 3.5.7, CMake 4.4.5, Python 3.12.14.
+- Release CTest 20/20. ASan/UBSan Debug CTest 20/20 (`ASAN_OPTIONS=detect_leaks=0`, `UBSAN_OPTIONS=halt_on_error=1`).
+- 기본 LeakSanitizer 실행은 `LeakSanitizer has encountered a fatal error` 및 ptrace 제한 안내로 실패했다. 누수 탐지기 통과로 보고하지 않는다.
+- 대체 할당 계측은 성공/인증실패 경로의 할당=해제, 남은 임시 할당0, free 직전 버퍼0, 마지막 tag16/state48 소거를 확인한다. 범용 누수 탐지기를 대체했다는 의미는 아니다.
+- 계측 target은 실제 AEAD·인자검사·순열 소스를 재사용하고 메모리/소거 모듈만 테스트 구현에 연결한다. 생산 정적 라이브러리에는 계측 제어·역순열이 없다.
+- `BUILD_TESTING=OFF` 새 configure/build 및 공개 헤더 C++11 구문 검사가 통과했다.
+- Windows/macOS/Clang, 최대 길이의 실제 암복호화, 동시 호출, 추가256개 AEAD corpus, 암호분석·성능·기계어 검토는 이번 완료 주장에 포함하지 않는다.
+- 다음 계획은 21번. 사용자 지시대로 1–20번을 새 루트부터 main에 게시한다. 원격 CI는 24번 구현 전으로 미실행이다.
 
 | 계획 | 원격 SHA | 검증 |
 | ---: | --- | --- |
@@ -32,4 +43,5 @@
 | 16 | `20b0c843cea205bd81a5e8f3d221e4aadfee4ae7` | 공개 encrypt: 빈/17B KAT·비중첩/정확한 in-place·capacity/NULL/overlap 실패의 ciphertext/tag 불변·여유 capacity 보존 |
 | 17 | `4d13d70a76a6b3abed8442c38033a3bb99828bdb` | 공개 decrypt: 빈/17B KAT·정확한 in-place·틀린 태그의 평문 미공개와 입력 ciphertext/여유영역 보존; CRYPTO_memcmp 16B 비교 |
 | 18 | `bf48c588c9e9dfe3c4c2f40460bb5b0211053999` | 고정 AEAD 146개=경계144+규범2; C/Python 암복호화·in-place·여유 capacity·빈/정배수 tail trace 일치; fixture label/index·nonce 중복없음 |
-| 19 | 이 행을 포함한 커밋 | API 계약799개: 길이/capacity/NULL/주소overflow 우선순위·양방향 partial overlap·모든 output/input alias·읽기 alias 허용·실제 구간 경계·실패시 arena 전체 불변 |
+| 19 | `8691e861fe975280cbde7a3dd12483b336272109` | API 계약799개: 길이/capacity/NULL/주소overflow 우선순위·양방향 partial overlap·모든 output/input alias·읽기 alias 허용·실제 구간 경계·실패시 arena 전체 불변 |
+| 20 | 이 행을 포함한 커밋 | 할당/인증 실패·0/1/16/17/65B·in-place 실패 원자성·malloc(0) 회피·임시/tag/state 소거·할당해제 균형; Release20/20·ASan/UBSan20/20(LSan 환경제약 별도 기록) |
