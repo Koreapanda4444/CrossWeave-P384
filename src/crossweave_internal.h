@@ -33,4 +33,7 @@ static inline int cw_overlap(cw_range a, cw_range b) {
 void cw_clean(void *p, size_t n);
 extern const uint64_t cw_rc[16][2];
 extern const uint8_t cw_iv[16];
+uint64_t cw_local(uint64_t a, uint64_t b, unsigned r, unsigned i);
+void cw_lane_update(uint64_t s[6], unsigned r, unsigned i);
+void cw_updates(uint64_t s[6], unsigned r);
 #endif
