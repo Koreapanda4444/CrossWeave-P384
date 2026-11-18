@@ -31,4 +31,5 @@
 | 15 | `18300f00894266659b8c86bd29351e54e532183e` | 64개 AD/메시지 경계쌍 ciphertext·tag·모든 message/final state 독립 대조; C block/whole 복호화 feedback 동등 |
 | 16 | `20b0c843cea205bd81a5e8f3d221e4aadfee4ae7` | 공개 encrypt: 빈/17B KAT·비중첩/정확한 in-place·capacity/NULL/overlap 실패의 ciphertext/tag 불변·여유 capacity 보존 |
 | 17 | `4d13d70a76a6b3abed8442c38033a3bb99828bdb` | 공개 decrypt: 빈/17B KAT·정확한 in-place·틀린 태그의 평문 미공개와 입력 ciphertext/여유영역 보존; CRYPTO_memcmp 16B 비교 |
-| 18 | 이 행을 포함한 커밋 | 고정 AEAD 146개=경계144+규범2; C/Python 암복호화·in-place·여유 capacity·빈/정배수 tail trace 일치; fixture label/index·nonce 중복없음 |
+| 18 | `bf48c588c9e9dfe3c4c2f40460bb5b0211053999` | 고정 AEAD 146개=경계144+규범2; C/Python 암복호화·in-place·여유 capacity·빈/정배수 tail trace 일치; fixture label/index·nonce 중복없음 |
+| 19 | 이 행을 포함한 커밋 | API 계약799개: 길이/capacity/NULL/주소overflow 우선순위·양방향 partial overlap·모든 output/input alias·읽기 alias 허용·실제 구간 경계·실패시 arena 전체 불변 |

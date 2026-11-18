@@ -20,7 +20,7 @@ int main(void) {
         CHECK(functions[j](out+1,48,out,48)==CROSSWEAVE_EOVERLAP);
         CHECK(functions[j](out,48,out+1,48)==CROSSWEAVE_EOVERLAP);
         CHECK(memcmp(out,before,sizeof out)==0);
-        CHECK(functions[j](out,SIZE_MAX,in,48)==CROSSWEAVE_OK);
+        CHECK(functions[j](out,sizeof out,in,48)==CROSSWEAVE_OK);
         CHECK(memcmp(out,expected,48)==0 && memcmp(out+48,before+48,48)==0);
         memset(out,0,48); CHECK(functions[j](out,96,out,48)==CROSSWEAVE_OK);
         CHECK(memcmp(out,expected,48)==0 && memcmp(out+48,before+48,48)==0);
