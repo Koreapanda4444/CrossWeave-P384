@@ -29,4 +29,5 @@
 | 13 | `6d693d7011a9557fb1a45a250e7a080c7c363e94` | 독립 Python AEAD: 명세 빈/17B KAT·태그 거부·정/역 trace 일치·0/16/32B 빈 최종 블록; 순열 oracle 재통과 |
 | 14 | `684b4eba82382d148f0d3e14b4429d7453253e58` | C 초기화·key XOR·AD 0/1/15/16/17/31/32/33B 모든 단계 state 독립 대조; NULL/0 AD 경로·oracle/KAT 회귀 |
 | 15 | `18300f00894266659b8c86bd29351e54e532183e` | 64개 AD/메시지 경계쌍 ciphertext·tag·모든 message/final state 독립 대조; C block/whole 복호화 feedback 동등 |
-| 16 | 이 행을 포함한 커밋 | 공개 encrypt: 빈/17B KAT·비중첩/정확한 in-place·capacity/NULL/overlap 실패의 ciphertext/tag 불변·여유 capacity 보존 |
+| 16 | `20b0c843cea205bd81a5e8f3d221e4aadfee4ae7` | 공개 encrypt: 빈/17B KAT·비중첩/정확한 in-place·capacity/NULL/overlap 실패의 ciphertext/tag 불변·여유 capacity 보존 |
+| 17 | 이 행을 포함한 커밋 | 공개 decrypt: 빈/17B KAT·정확한 in-place·틀린 태그의 평문 미공개와 입력 ciphertext/여유영역 보존; CRYPTO_memcmp 16B 비교 |

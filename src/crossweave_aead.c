@@ -1,5 +1,6 @@
 #include "crossweave_internal.h"
 #include <string.h>
+#include <openssl/crypto.h>
 void cw_initialize(uint8_t s[48], const uint8_t key[16], const uint8_t nonce[16]) {
     memcpy(s,nonce,16); memcpy(s+16,key,16); memcpy(s+32,cw_iv,16);
     cw_permute(s,16);
@@ -51,4 +52,22 @@ crossweave_status crossweave_encrypt(uint8_t *ciphertext, size_t ciphertext_capa
     memcpy(tag,local_tag,16);
     cw_free(tmp,plaintext_len); cw_clean(local_tag,sizeof local_tag); cw_clean(s,sizeof s);
     return CROSSWEAVE_OK;
+}
+
+crossweave_status crossweave_decrypt(uint8_t *plaintext, size_t plaintext_capacity,
+        const uint8_t *ciphertext, size_t ciphertext_len, const uint8_t *tag, size_t tag_len,
+        const uint8_t *ad, size_t ad_len, const uint8_t *nonce, size_t nonce_len,
+        const uint8_t *key, size_t key_len) {
+    crossweave_status status=cw_validate_aead(1,plaintext,plaintext_capacity,
+        ciphertext,ciphertext_len,tag,tag_len,ad,ad_len,nonce,nonce_len,key,key_len);
+    if(status!=CROSSWEAVE_OK) return status;
+    uint8_t *tmp=NULL;
+    if(ciphertext_len!=0) { tmp=cw_alloc(ciphertext_len); if(tmp==NULL) return CROSSWEAVE_ENOMEM; }
+    uint8_t s[48],local_tag[16];
+    cw_initialize(s,key,nonce); cw_absorb_ad(s,ad,ad_len);
+    cw_message(s,tmp,ciphertext,ciphertext_len,1); cw_finalize(s,local_tag,key);
+    status=CRYPTO_memcmp(tag,local_tag,16)==0?CROSSWEAVE_OK:CROSSWEAVE_EAUTH;
+    if(status==CROSSWEAVE_OK && ciphertext_len!=0) memcpy(plaintext,tmp,ciphertext_len);
+    cw_free(tmp,ciphertext_len); cw_clean(local_tag,sizeof local_tag); cw_clean(s,sizeof s);
+    return status;
 }
