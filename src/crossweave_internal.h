@@ -36,4 +36,6 @@ extern const uint8_t cw_iv[16];
 uint64_t cw_local(uint64_t a, uint64_t b, unsigned r, unsigned i);
 void cw_lane_update(uint64_t s[6], unsigned r, unsigned i);
 void cw_updates(uint64_t s[6], unsigned r);
+void cw_round(uint64_t s[6], unsigned r);
+void cw_permute(uint8_t bytes[48], unsigned rounds);
 #endif

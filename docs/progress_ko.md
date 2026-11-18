@@ -20,4 +20,5 @@
 | 4 | `f1c390502540a3ce7f1a662df7143e9ecb50cd37` | CTest 3/3; SHAKE 빈입력 KAT·15개 Python/OpenSSL 대조; 실제 EVP 초기화/비XOF 종료 실패 경로 확인 |
 | 5 | `60b7b82636c09cf94d7e86816fac905832c7beb4` | CTest 5/5; RC32개+IV 272B 전체 배열·생성기·Python/OpenSSL 일치; NUL·잘못된 IV 도메인 음성 대조 |
 | 6 | `e1ba9ef06e7e20eab6c161b553a11a5824e03f88` | CTest 6/6; C와 독립된 수식 oracle; P12/P16 고정 KAT·32상태×17prefix 양방향 역변환 1088회 |
-| 7 | 이 행을 포함한 커밋 | CTest 7/7; 216개 lane 중간값 C/Python 일치·overflow 입력·동시 갱신 음성 대조 |
+| 7 | `1c20ff18a33c981865e6c2cc4d4b96fcea55cbb0` | CTest 7/7; 216개 lane 중간값 C/Python 일치·overflow 입력·동시 갱신 음성 대조 |
+| 8 | 이 행을 포함한 커밋 | CTest 8/8; r0/11/15 중간 상태12개·P12/P16 8개 독립 대조·규범 zero KAT 일치 |
