@@ -42,4 +42,7 @@ void cw_initialize(uint8_t s[48], const uint8_t key[16], const uint8_t nonce[16]
 void cw_ad_full(uint8_t s[48], const uint8_t block[16]);
 void cw_ad_tail(uint8_t s[48], const uint8_t *tail, size_t n);
 void cw_absorb_ad(uint8_t s[48], const uint8_t *ad, size_t n);
+void cw_message_block(uint8_t s[48], uint8_t *out, const uint8_t *in, size_t n, int decrypt, int full);
+void cw_message(uint8_t s[48], uint8_t *out, const uint8_t *in, size_t n, int decrypt);
+void cw_finalize(uint8_t s[48], uint8_t tag[16], const uint8_t key[16]);
 #endif
