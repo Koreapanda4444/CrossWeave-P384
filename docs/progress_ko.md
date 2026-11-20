@@ -56,4 +56,5 @@
 | 28 | `d1309cc2ee820e689b41383004deb6badd7be17b` | 55개 차분·384bit 집계·discovery/holdout 분리·동률규칙·30분상한·중단JSON 구현; C/Python counts·정확이항/Wilson/logp 경계·예산0 재현 검증 |
 | 29 | `f0b585096fecb8681af14791baf3f85b0d67cdfa` | 입력bit383→출력bit1 고정가설: rounds2/4/8/12/16×8dataset×16384쌍40검정 완료; Wilson99·정확양측이항·Bonferroni40·underflow logp 기록; 과거11회 강제없음 |
 | 30 | `bb9fb443668e5db9a1431443bc31d232565c496f` | AD/M길이0..33 및 독립3×3패턴10404쌍 실제 흡수전/후 state·domain·빈tail 전부대조; 프레임역해독/중복검사·정상코어 nonce재사용 첫블록XOR 대조 |
-| 31 | 이 행을 포함한 커밋 | research-smoke/full complete(전체예산1800초 중13.30초); 국소96위치·고정40·discovery330·holdout12·프레이밍10404 전량완료; 소스/실행파일지문·가정/범위/미탐색·선정JSON 기록; testingOFF 연구build 확인 |
+| 31 | `e0938149d0b8514e33ad69b4f42caadbf54b586c` | research-smoke/full complete(전체예산1800초 중13.30초); 국소96위치·고정40·discovery330·holdout12·프레이밍10404 전량완료; 소스/실행파일지문·가정/범위/미탐색·선정JSON 기록; testingOFF 연구build 확인 |
+| 31-fix | 이 행을 포함한 커밋 | 연구 target에서 OpenSSL 헤더를 직접 사용하는 omitted_ad에 명시 OpenSSL::Crypto 연결; Linux 기본 include가 숨긴 macOS/Windows CI 실패 수정 |
