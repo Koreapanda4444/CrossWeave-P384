@@ -47,4 +47,5 @@
 | 20 | `006148f85944d9a57be152fbad4f1c55fbeb2635` | 할당/인증 실패·0/1/16/17/65B·in-place 실패 원자성·malloc(0) 회피·임시/tag/state 소거·할당해제 균형; Release20/20·ASan/UBSan20/20(LSan 환경제약 별도 기록) |
 | 21 | `3d6d848a43f997a70d09033fd738d94ff8d1f415` | 고정 fixture1168개 단일 비트 변조; 분리/in-place 출력 불변; tag길이0/15/17 거부 |
 | 22 | `c57a92d0da41f243742527996891554cb27787e2` | check-differential: 순열13472대조+AEAD400사례(경계144/추가256); fixture label/index·nonce·길이 JSON 기록·실패 최초차이 진단 |
-| 23 | 이 행을 포함한 커밋 | Release23/23·ASan/UBSan23/23(LSan 제외); 실제 AD/메시지 각각2^24B 왕복·guard·비정렬100회·상한초과 접근전거부 |
+| 23 | `aa011e4f5d59d6c570b06a3fd5f5aae9a2242b78` | Release23/23·ASan/UBSan23/23(LSan 제외); 실제 AD/메시지 각각2^24B 왕복·guard·비정렬100회·상한초과 접근전거부 |
+| 24 | 이 행을 포함한 커밋 | CI YAML 검증; 실제 공식 action v4/v5 SHA와 Windows OpenSSL 경로 확인; 원격 4플랫폼+sanitizer 결과는 게시 후 확인 |

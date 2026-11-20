@@ -1,0 +1,75 @@
+name: CrossWeave verification
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: crossweave-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native:
+    name: ${{ matrix.os }} / ${{ matrix.cc || 'MSVC' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: ubuntu-24.04, cc: gcc}
+          - {os: ubuntu-24.04, cc: clang}
+          - {os: macos-14, cc: clang}
+          - {os: windows-2025, cc: ''}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    env:
+      CC: ${{ matrix.cc }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev
+      - name: Configure Unix
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == macOS ]]; then export OPENSSL_ROOT_DIR="$(brew --prefix openssl@3)"; fi
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON "-DOPENSSL_ROOT_DIR=${OPENSSL_ROOT_DIR:-}"
+      - name: Configure Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          "$env:ProgramFiles\OpenSSL\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+          cmake -S . -B build -A x64 -DBUILD_TESTING=ON "-DOPENSSL_ROOT_DIR=$env:ProgramFiles\OpenSSL"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build
+        run: cmake --build build --config Release --parallel 2
+      - name: KAT, contracts, actual maximum input and independent comparisons
+        run: ctest --test-dir build -C Release --output-on-failure
+      - name: Deterministic differential target
+        run: cmake --build build --config Release --target check-differential
+  sanitizers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev
+      - name: Configure sanitizer build
+        run: cmake -S . -B build-sanitize -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DCRYPTO_ENABLE_SANITIZERS=ON
+      - name: Build
+        run: cmake --build build-sanitize --parallel 2
+      - name: ASan, UBSan and default leak detection
+        env:
+          UBSAN_OPTIONS: halt_on_error=1
+        run: ctest --test-dir build-sanitize --output-on-failure
