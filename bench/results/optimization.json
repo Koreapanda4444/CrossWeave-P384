@@ -1,0 +1,66 @@
+{
+  "decision": "retain bytewise production core",
+  "reason": "LE64 candidate was slower on all three selected AD32 workloads; no demonstrated gain on this host",
+  "candidate_aead_sha256": "1c3b2984e07f2340c658063fc24a5755e55c8c694c7e033275dca788158b1b81",
+  "before_core_source_sha256": "e0fd759a7c534df06ba42517f04be9a3c67bbaa5ff2e4eb177b17a94734e639d",
+  "candidate_core_source_sha256": "95a58a95f8ea04c47e05b77d1ddfc8e1613cf19f6855856f969c025f63f3f2f9",
+  "rows": [
+    {
+      "ad_bytes": 32,
+      "message_bytes": 16,
+      "before": {
+        "median_ns": 2670.406,
+        "min_ns": 2462.906,
+        "max_ns": 3069.186,
+        "message_mib_s": 5.714033395109208
+      },
+      "candidate": {
+        "median_ns": 2724.695,
+        "min_ns": 2398.627,
+        "max_ns": 3827.493,
+        "message_mib_s": 5.600182428675503
+      },
+      "median_speedup": 0.9800752010775517
+    },
+    {
+      "ad_bytes": 32,
+      "message_bytes": 16384,
+      "before": {
+        "median_ns": 326916.906,
+        "min_ns": 322181.616,
+        "max_ns": 345898.725,
+        "message_mib_s": 47.79501981460695
+      },
+      "candidate": {
+        "median_ns": 347661.58,
+        "min_ns": 330288.039,
+        "max_ns": 420640.239,
+        "message_mib_s": 44.943131190970256
+      },
+      "median_speedup": 0.9403308412738618
+    },
+    {
+      "ad_bytes": 32,
+      "message_bytes": 1048576,
+      "before": {
+        "median_ns": 21584384.75,
+        "min_ns": 21065073.0,
+        "max_ns": 22499590.0,
+        "message_mib_s": 46.329789409447955
+      },
+      "candidate": {
+        "median_ns": 22255286.75,
+        "min_ns": 20508633.5,
+        "max_ns": 23257150.25,
+        "message_mib_s": 44.93314380683053
+      },
+      "median_speedup": 0.9698542639537098
+    }
+  ],
+  "validation": {
+    "candidate_release_ctest": "29/29",
+    "candidate_asan_ubsan": "29/29; local leak detection excluded",
+    "candidate_research_full": "complete"
+  },
+  "reproduction": "python3 bench/evaluate_full_blocks.py --directory build/full-block-trial"
+}

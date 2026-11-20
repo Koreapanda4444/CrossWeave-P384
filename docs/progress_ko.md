@@ -60,4 +60,5 @@
 | 31-fix | `c0892348c650200dbd961a98692cdcc4e7fbc8e5` | 연구 target에서 OpenSSL 헤더를 직접 사용하는 omitted_ad에 명시 OpenSSL::Crypto 연결; Linux 기본 include가 숨긴 macOS/Windows CI 실패 수정 |
 | 31-fix2 | `9c86cc61192ec2ae4da9acdb079d8b958f20affc` | Windows CRT text stdin의 CRLF/0x1a 변환으로 raw 연구 stream 단축 발견; 두 binary worker에만 O_BINARY 적용·0..255 byte 회귀 추가 |
 | 32 | `c96ef7aecdfc4bf63f188cac53d2fc774afc3fce` | 단조시계·API포함지연·P12/P16·AD0/32/1024×메시지6크기; warmup후5표본·checksum·freshkey/카운터nonce·인증실패시간/출력불변·환경/메모리/객체크기 JSON 실측 |
-| 33 | 이 행을 포함한 커밋 | OpenSSL AES128GCM/ChaCha20Poly1305 전체 AEAD wrapper·KAT/왕복/변조불변/EVP정수상한 통과; 동일18작업×3알고리즘+P12/P16의5표본56행 실측; key/nonce·가속/EVP context 비용 구분 |
+| 33 | `95452ef18e204302072b5024333d03574824d226` | OpenSSL AES128GCM/ChaCha20Poly1305 전체 AEAD wrapper·KAT/왕복/변조불변/EVP정수상한 통과; 동일18작업×3알고리즘+P12/P16의5표본56행 실측; key/nonce·가속/EVP context 비용 구분 |
+| 34 | 이 행을 포함한 커밋 | LE64후보 Release29/29·ASan/UBSan29/29·full연구 통과했으나 AD32 대표3작업0.94~0.98배로 느림; 명세 대체절차로 bytewise코어 유지·복원후sanitizer29/29·정확후보지문 재현 도구/JSON 기록 |
