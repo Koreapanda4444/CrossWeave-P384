@@ -12,9 +12,12 @@ def run(args):
         left=deadline-time.monotonic()
         if left<=0:raise TimeoutError('overall research budget exhausted')
         return left
+    flush()
     try:
         result['components']['omitted_ad']=json.loads(subprocess.check_output([str(args.omitted_ad)],timeout=remaining()))
-        result['components']['local']=local_relations.run(args.local_runner,full);remaining();flush()
+        result['components']['local']=local_relations.run(args.local_runner,full,deadline,folder/('local-'+args.mode+'.json'));flush()
+        if result['components']['local']['status']!='complete':raise TimeoutError('local component incomplete')
+        remaining()
         result['components']['fixed']=fixed_hypothesis.run(args.worker,deadline,full,folder/('fixed-'+args.mode+'.json'));flush()
         if full:
             result['components']['search']=experiments.search(args.worker,deadline,folder/'search-full.json');flush()
@@ -22,7 +25,7 @@ def run(args):
         result['components']['framing']=framing.run(args.framing_runner,deadline,full,folder/('framing-'+args.mode+'.json'));flush()
         result['components']['nonce_reuse']=framing.nonce_reuse(args.aead_runner);remaining()
         result['status']='complete' if all(c.get('status','complete')=='complete' for c in result['components'].values()) else 'incomplete'
-    except (TimeoutError,subprocess.TimeoutExpired) as e:result['interruption']=str(e)
+    except (TimeoutError,subprocess.TimeoutExpired,KeyboardInterrupt) as e:result['interruption']=str(e) or 'keyboard interruption'
     flush();return result
 
 def selected(result):

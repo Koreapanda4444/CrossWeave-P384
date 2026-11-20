@@ -32,6 +32,7 @@ def run(worker,deadline,full=True,checkpoint=None):
     fixtures=[(pattern(a,x),pattern(m,y)) for a,m,x,y in itertools.product(lengths,lengths,range(3),range(3))]
     d=dict(**identity(),status='incomplete',planned=len(fixtures),completed=0,patterns=['zero','ff','incrementing'],pattern_cross_product=True,unique_encodings=0,classification='framing event regression, not a mode security proof')
     seen={};digest=hashlib.sha256()
+    if checkpoint:save(checkpoint,d)
     try:
         for start in range(0,len(fixtures),128):
             left=deadline-time.monotonic()
@@ -56,7 +57,7 @@ def run(worker,deadline,full=True,checkpoint=None):
             d['unique_encodings']=len(seen)
             if checkpoint:save(checkpoint,d)
         d['status']='complete'
-    except TimeoutError as e:d['interruption']=str(e)
+    except (TimeoutError,KeyboardInterrupt) as e:d['interruption']=str(e) or 'keyboard interruption'
     d['transcript_sha256']=digest.hexdigest()
     if checkpoint:save(checkpoint,d)
     return d

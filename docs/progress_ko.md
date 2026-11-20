@@ -1,27 +1,60 @@
-# 실행 기록
+# 최종 진행 상태와 재현 근거
 
-대상 명세: `docs/spec_ko.md` 개정 2.0. 이번 요청 범위: 계획 1–20.
-소스·이력은 새로 작성한다. 초기화 전 기존 원격 main은
-`d424070e56c9bd08e95dea3b379bf3da8adb17ec`였으며 다른 구현·이력이 있었다.
-초기에는 기존 이력을 보존했고, 이후 사용자 추가 지시로 main 초기화를 승인받았다.
-기존 16개 커밋은 새 main의 조상 이력에서 제외했다.
-부모 없는 새 1번 커밋부터 계획별 main 갱신을 순서대로 수행한다.
-아래 SHA는 게시된 원격 커밋이며 로컬 검증 결과와 연결한다. 원격 CI는 24번 구현 전으로 미실행이다.
+계획1–36 구현·검증·인계 기준선 완료. 24번 이식성 수정1개와31번 연구 도구
+이식성 수정2개를 별도 fix 커밋으로 기록했다. main은 새 루트부터39개 실제
+커밋으로 구성되며 계획 번호와 총 Git 커밋 수는 다르다. 추가 브랜치는 만들지 않는다.
+초기 기존16개 main 이력은 사용자 승인으로 새 이력에서 제외했다.
 
-각 행은 해당 변경에 포함한 실제 로컬 검증이다. SHA는 다음 변경에서
-확정하며 마지막 행은 그 행을 포함한 커밋의 제목으로 식별한다.
-번호별 SHA는 `git log --reverse --format='%H %s'`로 재현할 수 있다.
+## 검증 범위
 
-## 20번 체크포인트 검증 범위
+- 기능: 고정 순열/AEAD 벡터, 순열13472개 대조, AEAD400사례,1168비트 변조,
+  인자799개,할당실패·실제 AD/메시지 각2^24B·guard·비정렬·동시4스레드800왕복.
+- 전체 옵션의 CTest29개. Linux GCC14.2/OpenSSL3.5.7/Python3.12.14에서 Release와
+  ASan/UBSan 각29/29 통과. 지역 LSan은 ptrace 제한으로 제외했고 CI의 default LSan과 구분한다.
+- 원격 Linux GCC/Clang·Windows MSVC·macOS AppleClang·Linux sanitizer의5개 job을
+  실행했다. 24번의 C4996/runner image 문제와31번의 OpenSSL include·Windows binary
+  stdin 문제를 실제 실패 로그에서 찾아 수정했다. 수정 후5개 job 통과 기록은
+  873f7e6 및9c86cc6의 Actions에 있다. 35번310a05c의5개 CI job에서 benchmark compile/smoke와 전체 회귀가 모두 성공했다.
+  최종36번 commit도 동일 workflow의 실제 결과로 확인한다.
+- 코드 검토:4개 public API 계약 대조, 생산 전역 mutable state 부재, GCC x86_64의
+  소스/생성 코드에서 공개 길이/라운드 분기와 인증 후 memcpy 확인. 다른 CPU/컴파일러의
+  전체 상수시간 증명, OpenSSL 내부 기계어/물리 부채널 분석은 미완료다.
+- 유한 연구: 국소96위치×256쌍·동시MSB16384쌍,고정40검정,discovery330실험,
+  holdout12검정,프레이밍10404쌍,AD누락/nonce중복 대조 완료. 목표 실행량·완료 수·
+  생성 입력·core SHA·보정 검정군을 JSON에 남겼다. 전체 trail/hull·모드 보안 증명 등은 미탐색이다.
+- 성능: 동일 Release 호스트5표본, P12/P16 및18작업×3알고리즘 전체 암복호화/인증실패,
+  임시 payload 상한/객체 크기,키·nonce·가속·분산 차이를 기록했다. 다른 CPU/OS 성능은 미측정이다.
+- 34번 LE64 후보는 정확성/연구/sanitizer를 통과했으나 대표 작업이 느려서 규범 대체 절차로
+  생산 bytewise 코어를 유지했다. 실제 제목과 재현 도구/소스 지문은 최적화 문서에 있다.
 
-- Linux x86_64, GCC 14.2.0, OpenSSL 3.5.7, CMake 4.4.5, Python 3.12.14.
-- Release CTest 20/20. ASan/UBSan Debug CTest 20/20 (`ASAN_OPTIONS=detect_leaks=0`, `UBSAN_OPTIONS=halt_on_error=1`).
-- 기본 LeakSanitizer 실행은 `LeakSanitizer has encountered a fatal error` 및 ptrace 제한 안내로 실패했다. 누수 탐지기 통과로 보고하지 않는다.
-- 대체 할당 계측은 성공/인증실패 경로의 할당=해제, 남은 임시 할당0, free 직전 버퍼0, 마지막 tag16/state48 소거를 확인한다. 범용 누수 탐지기를 대체했다는 의미는 아니다.
-- 계측 target은 실제 AEAD·인자검사·순열 소스를 재사용하고 메모리/소거 모듈만 테스트 구현에 연결한다. 생산 정적 라이브러리에는 계측 제어·역순열이 없다.
-- `BUILD_TESTING=OFF` 새 configure/build 및 공개 헤더 C++11 구문 검사가 통과했다.
-- Windows/macOS/Clang, 최대 길이의 실제 암복호화, 동시 호출, 추가256개 AEAD corpus, 암호분석·성능·기계어 검토는 이번 완료 주장에 포함하지 않는다.
-- 다음 계획은 21번. 사용자 지시대로 1–20번을 새 루트부터 main에 게시한다. 원격 CI는 24번 구현 전으로 미실행이다.
+## 재현과 Git 상태 확인
+
+README의 clean configure/build, CTest, check-differential, research-smoke/full,
+bench 및 sanitizer 명령을 Git 없는 새 소스 디렉터리에서 실행해 확인했다.
+새 디렉터리 Release29/29·ASan/UBSan29/29, 독립대조·smoke/full·56행 benchmark가
+모두 완료됐고 Git identity null에서도 core fingerprint와 결과가 일치했다.
+예산0/키보드 중단은 이전 complete 파일을 incomplete로 교체하며, 각 연구의
+완료 수와 중간 checkpoint를 보존하도록 확인했다. Git 없는 소스
+복사본에서는 Git identity가 null이며 실제 C source fingerprint는 계속 기록한다.
+최종 로컬/푸시 SHA는 자기참조 문자열을 문서에 고정하지 않고 아래 명령으로 확인한다.
+
+```sh
+git rev-parse HEAD
+git rev-parse origin/main
+git rev-list --count main
+git log --reverse --format='%H %s'
+```
+
+최종 commit의 실제 원격 CI 상태는
+[Actions](https://github.com/Koreapanda4444/CrossWeave-P384/actions/workflows/ci.yml)의
+동일 SHA에서 확인한다. 과거 실패·중간 취소를 성공으로 바꾸지 않는다.
+36번 완료는 구현·유한 연구·문서 인계 완료이며 암호학적 안전성 승인/상용 인증이 아니다.
+후속 작업은 보안 문서의 미탐색과 외부 검토 질문이며 이번 계획의 미구현 기능은 없다.
+
+## 계획과 실제 커밋
+
+각 행은 해당 변경의 로컬 검증과 원격 커밋을 연결한다. 마지막 행은 그 행이
+포함된 commit 제목으로 식별하며 나머지 SHA는 다음 변경에서 확정했다.
 
 | 계획 | 원격 SHA | 검증 |
 | ---: | --- | --- |
@@ -62,4 +95,5 @@
 | 32 | `c96ef7aecdfc4bf63f188cac53d2fc774afc3fce` | 단조시계·API포함지연·P12/P16·AD0/32/1024×메시지6크기; warmup후5표본·checksum·freshkey/카운터nonce·인증실패시간/출력불변·환경/메모리/객체크기 JSON 실측 |
 | 33 | `95452ef18e204302072b5024333d03574824d226` | OpenSSL AES128GCM/ChaCha20Poly1305 전체 AEAD wrapper·KAT/왕복/변조불변/EVP정수상한 통과; 동일18작업×3알고리즘+P12/P16의5표본56행 실측; key/nonce·가속/EVP context 비용 구분 |
 | 34 | `f9ae8fd71a30a445eaa911017036228e689b08f9` | LE64후보 Release29/29·ASan/UBSan29/29·full연구 통과했으나 AD32 대표3작업0.94~0.98배로 느림; 명세 대체절차로 bytewise코어 유지·복원후sanitizer29/29·정확후보지문 재현 도구/JSON 기록 |
-| 35 | 이 행을 포함한 커밋 | 동일호스트 최종56행×5표본·중앙값/minmax·CPU/OS/compiler/OpenSSL/가속한계·전체API비용·GNUsize/heap상한 문서화; 과거참고값 분리·최적화거부 원표본 보존; 실제warmup 수 메타데이터 명시·CI benchmark compile/smoke 추가 |
+| 35 | `310a05c54947cff74e147f1085baaea161afadd5` | 동일호스트 최종56행×5표본·중앙값/minmax·CPU/OS/compiler/OpenSSL/가속한계·전체API비용·GNUsize/heap상한 문서화; 과거참고값 분리·최적화거부 원표본 보존; 실제warmup 수 메타데이터 명시·CI benchmark compile/smoke 추가 |
+| 36 | 이 행을 포함한 커밋 | 새 Git없는 소스디렉터리에서 configure/build·Release29/29·ASan/UBSan29/29·독립대조·smoke/full·56행bench 재현; Git없는지문·예산0/중단incomplete체크포인트 회귀; README/API/연구/성능/진행표 최종정리; 35번CI5job성공·최종SHA CI 별도확인 |

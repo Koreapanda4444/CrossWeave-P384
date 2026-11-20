@@ -27,3 +27,20 @@ print('55 deltas, 384-bit numbering, independent C/Python counts, seed separatio
 raw=bytes(range(256))+bytes(128)
 actual=json.loads(subprocess.check_output([sys.argv[1],'0','0','8'],input=raw))
 assert actual==[8]+[0]*383
+
+# A cancelled experiment must replace a stale complete result and retain partial counts.
+from unittest.mock import patch
+from argparse import Namespace
+import local_relations
+from run import run as integration_run
+with tempfile.TemporaryDirectory() as tmp:
+    path=pathlib.Path(tmp)/'result.json';path.write_text('{"status":"complete"}')
+    worker=pathlib.Path(sys.argv[1]).resolve()
+    args=Namespace(mode='full',budget=0,worker=worker,local_runner=worker,framing_runner=worker,omitted_ad=worker,aead_runner=worker,output=path)
+    interrupted=integration_run(args)
+    assert interrupted['status']=='incomplete' and json.loads(path.read_text())['status']=='incomplete'
+    with patch('experiments.count',side_effect=[[0]*384,KeyboardInterrupt()]):
+        interrupted=search(worker,time.monotonic()+60,path)
+    assert interrupted['status']=='incomplete' and interrupted['completed']['discovery']==1
+    interrupted=local_relations.run(worker,deadline=time.monotonic(),checkpoint=path)
+    assert interrupted['status']=='incomplete' and interrupted['completed_positions']==0

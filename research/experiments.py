@@ -36,6 +36,7 @@ def search(worker,deadline,checkpoint=None):
     result=dict(**identity(),status='incomplete',classification='permutation differential search and independent holdout',completed={'discovery':0,'holdout':0},planned={'discovery':330,'holdout':12},selected=[],holdout=[])
     def flush():
         if checkpoint:save(checkpoint,result)
+    flush()
     try:
         for rounds in (1,2,4,8,12,16):
             candidates=[]
@@ -52,7 +53,7 @@ def search(worker,deadline,checkpoint=None):
             result['holdout'].append(dict(**generator('holdout',r,i,ordinal,16384),output_bit=bit,**statistics(counts[bit],16384,12)))
             result['completed']['holdout']+=1;flush()
         result['status']='complete'
-    except TimeoutError as e:result['interruption']=str(e)
+    except (TimeoutError,KeyboardInterrupt) as e:result['interruption']=str(e) or 'keyboard interruption'
     flush();return result
 
 if __name__=='__main__':
