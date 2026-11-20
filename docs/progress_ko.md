@@ -52,4 +52,5 @@
 | 24-fix | `873f7e6ef89678287a7f768976847c33915a1704` | Windows C4996은 bounded sscanf 테스트 target에만 표준 CRT 허용; macos15·검증된 Node24 action v6 SHA로 갱신; 이전 CI 실패/취소 보존 |
 | 25 | `9d8a4edb06d1d6ace5526a078ace17cfa86fbc21` | CI수정 후 LinuxGCC/Clang·WindowsMSVC·macOSAppleClang·LSan포함sanitizer 5job 성공; API소유권/alias/부채널 문서·GCC x86_64 기계어 검토·4스레드800왕복 |
 | 26 | `ce277f795b0072219562b640cc2afd5d2e481b0d` | 의도적 tail XOR 단일누락: AD00→01 치환 수락과 정상코어거부; 1/15/17/31/33B 회귀·각 독립대조1질의·정상/결함 태그분리 |
-| 27 | 이 행을 포함한 커밋 | 96개(r,i) 각256쌍의 두 MSB항등식 C/Python대조; r0/i0 동시MSB16384쌍 지원집합·빈도확인; 독립가정/조건부확률 범위 기록 |
+| 27 | `1dfb414c1fa63833ea7f542c51e71737444fb524` | 96개(r,i) 각256쌍의 두 MSB항등식 C/Python대조; r0/i0 동시MSB16384쌍 지원집합·빈도확인; 독립가정/조건부확률 범위 기록 |
+| 28 | 이 행을 포함한 커밋 | 55개 차분·384bit 집계·discovery/holdout 분리·동률규칙·30분상한·중단JSON 구현; C/Python counts·정확이항/Wilson/logp 경계·예산0 재현 검증 |
