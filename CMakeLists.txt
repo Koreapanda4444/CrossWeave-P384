@@ -206,13 +206,18 @@ endif()
 
 if(CRYPTO_BUILD_BENCHMARKS)
   find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter)
-  add_executable(crossweave_benchmark bench/benchmark.c bench/baselines_none.c)
+  add_executable(crossweave_benchmark bench/benchmark.c bench/baselines.c)
   target_include_directories(crossweave_benchmark PRIVATE bench tests)
   target_link_libraries(crossweave_benchmark PRIVATE crossweave cw_options OpenSSL::Crypto)
   if(NOT WIN32)
     target_compile_definitions(crossweave_benchmark PRIVATE _POSIX_C_SOURCE=200809L)
   endif()
   add_custom_target(bench
-    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/bench/run.py $<TARGET_FILE:crossweave_benchmark> --build ${CMAKE_CURRENT_BINARY_DIR} --output ${CMAKE_CURRENT_BINARY_DIR}/benchmark.json
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/bench/run.py $<TARGET_FILE:crossweave_benchmark> --build ${CMAKE_CURRENT_BINARY_DIR} --output ${CMAKE_CURRENT_BINARY_DIR}/benchmark.json --algorithms CrossWeave AES-128-GCM ChaCha20-Poly1305
     DEPENDS crossweave_benchmark VERBATIM)
+endif()
+
+if(BUILD_TESTING)
+  cw_test(baseline_api tests/baseline_api.c bench/baselines.c)
+  target_include_directories(baseline_api PRIVATE bench)
 endif()
