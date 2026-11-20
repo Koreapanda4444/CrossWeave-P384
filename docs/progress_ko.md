@@ -50,4 +50,5 @@
 | 23 | `aa011e4f5d59d6c570b06a3fd5f5aae9a2242b78` | Release23/23·ASan/UBSan23/23(LSan 제외); 실제 AD/메시지 각각2^24B 왕복·guard·비정렬100회·상한초과 접근전거부 |
 | 24 | `1219bae0642663899981f68599231e7dfcad495b` | CI YAML 검증; 실제 공식 action v4/v5 SHA와 Windows OpenSSL 경로 확인; 원격 4플랫폼+sanitizer 결과는 게시 후 확인 |
 | 24-fix | `873f7e6ef89678287a7f768976847c33915a1704` | Windows C4996은 bounded sscanf 테스트 target에만 표준 CRT 허용; macos15·검증된 Node24 action v6 SHA로 갱신; 이전 CI 실패/취소 보존 |
-| 25 | 이 행을 포함한 커밋 | CI수정 후 LinuxGCC/Clang·WindowsMSVC·macOSAppleClang·LSan포함sanitizer 5job 성공; API소유권/alias/부채널 문서·GCC x86_64 기계어 검토·4스레드800왕복 |
+| 25 | `9d8a4edb06d1d6ace5526a078ace17cfa86fbc21` | CI수정 후 LinuxGCC/Clang·WindowsMSVC·macOSAppleClang·LSan포함sanitizer 5job 성공; API소유권/alias/부채널 문서·GCC x86_64 기계어 검토·4스레드800왕복 |
+| 26 | 이 행을 포함한 커밋 | 의도적 tail XOR 단일누락: AD00→01 치환 수락과 정상코어거부; 1/15/17/31/33B 회귀·각 독립대조1질의·정상/결함 태그분리 |
