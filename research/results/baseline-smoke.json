@@ -1,0 +1,113 @@
+{
+  "core_git_sha": "bb9fb443668e5db9a1431443bc31d232565c496f",
+  "core_source_sha256": "e0fd759a7c534df06ba42517f04be9a3c67bbaa5ff2e4eb177b17a94734e639d",
+  "seed": "0x43574e4f56303926",
+  "status": "complete",
+  "mode": "smoke",
+  "budget_seconds": 1800,
+  "components": {
+    "omitted_ad": {
+      "status": "complete",
+      "classification": "deliberately omitted residual AD control",
+      "ad_lengths": [
+        1,
+        15,
+        17,
+        31,
+        33
+      ],
+      "queries_per_control": 1,
+      "control_accepts_changed_ad": true,
+      "official_rejects_changed_ad": true
+    },
+    "local": {
+      "core_git_sha": "bb9fb443668e5db9a1431443bc31d232565c496f",
+      "core_source_sha256": "e0fd759a7c534df06ba42517f04be9a3c67bbaa5ff2e4eb177b17a94734e639d",
+      "seed": "0x43574e4f56303926",
+      "status": "complete",
+      "classification": "exact local component identities",
+      "positions": 96,
+      "pairs_per_position": 8,
+      "simultaneous_msb": null,
+      "theory": "Independent uniform a,b: each single MSB relation has two differences of probability 1/2; simultaneous at r0/i0 has 0,2^10,2^63,2^63 XOR 2^10 each 1/4. Dependent lane-event probabilities must not be multiplied.",
+      "checked_positions": 96,
+      "all_position_histogram_totals": {
+        "a": [
+          361,
+          407
+        ],
+        "b": [
+          389,
+          379
+        ]
+      },
+      "full_rows_location": "Reproduce with research-full; complete raw result is written under build/"
+    },
+    "fixed": {
+      "core_git_sha": "bb9fb443668e5db9a1431443bc31d232565c496f",
+      "core_source_sha256": "e0fd759a7c534df06ba42517f04be9a3c67bbaa5ff2e4eb177b17a94734e639d",
+      "seed": "0x43574e4f56303926",
+      "status": "complete",
+      "classification": "pre-registered permutation output bit hypothesis",
+      "input_bit": 383,
+      "output_bit": 1,
+      "planned": 1,
+      "completed": 1,
+      "rows": [
+        {
+          "label": "fixed",
+          "rounds": 2,
+          "delta_index": 47,
+          "delta_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080",
+          "dataset_index": 0,
+          "sample_count": 512,
+          "generator_input": "43726f737357656176652f72657365617263682f666978656400263930564f4e5743020000002f00000000000000",
+          "output_bit": 1,
+          "count": 0,
+          "n": 512,
+          "rate": 0.0,
+          "wilson_pointwise_99": [
+            0.0,
+            0.012793000711105928
+          ],
+          "p": 1.4916681462400413e-154,
+          "log_p": -354.19820926613204,
+          "bonferroni_family": 1,
+          "adjusted_p": 1.4916681462400413e-154,
+          "adjusted_log_p": -354.19820926613204
+        }
+      ]
+    },
+    "framing": {
+      "core_git_sha": "bb9fb443668e5db9a1431443bc31d232565c496f",
+      "core_source_sha256": "e0fd759a7c534df06ba42517f04be9a3c67bbaa5ff2e4eb177b17a94734e639d",
+      "seed": "0x43574e4f56303926",
+      "status": "complete",
+      "planned": 576,
+      "completed": 576,
+      "patterns": [
+        "zero",
+        "ff",
+        "incrementing"
+      ],
+      "pattern_cross_product": true,
+      "unique_encodings": 441,
+      "classification": "framing event regression, not a mode security proof",
+      "transcript_sha256": "ff80ad61677730569fc7baa6636d94b1d839e3dcd610e2a2b2012404b82f285b"
+    },
+    "nonce_reuse": {
+      "classification": "forbidden nonce-reuse control",
+      "queries": 2,
+      "plaintext_bytes": 32,
+      "first_block_xor_relation": true,
+      "unique_nonce_attack": false
+    }
+  },
+  "runner_sha256": {
+    "differential_worker": "c3cac01383a5b5dced354fdd3d7163e8f77b0226adcb937adbbe268e139538d9",
+    "local_runner": "ce9623d47136a06fbc7a5d0f21d6d807708dc759086da5d488a780f5397b7e55",
+    "framing_runner": "507a1a5ce3b0b1e05e2d2440593eaa87cfd92c283ae7aa3d39d6cd50bac6f3c8",
+    "omitted_ad": "70c7ff55a608bc8f6f258186b27a670fd8aea75f9d039bef40d2ab5745989447"
+  },
+  "elapsed_seconds": 0.8235688930000151
+}
