@@ -54,4 +54,5 @@
 | 26 | `ce277f795b0072219562b640cc2afd5d2e481b0d` | 의도적 tail XOR 단일누락: AD00→01 치환 수락과 정상코어거부; 1/15/17/31/33B 회귀·각 독립대조1질의·정상/결함 태그분리 |
 | 27 | `1dfb414c1fa63833ea7f542c51e71737444fb524` | 96개(r,i) 각256쌍의 두 MSB항등식 C/Python대조; r0/i0 동시MSB16384쌍 지원집합·빈도확인; 독립가정/조건부확률 범위 기록 |
 | 28 | `d1309cc2ee820e689b41383004deb6badd7be17b` | 55개 차분·384bit 집계·discovery/holdout 분리·동률규칙·30분상한·중단JSON 구현; C/Python counts·정확이항/Wilson/logp 경계·예산0 재현 검증 |
-| 29 | 이 행을 포함한 커밋 | 입력bit383→출력bit1 고정가설: rounds2/4/8/12/16×8dataset×16384쌍40검정 완료; Wilson99·정확양측이항·Bonferroni40·underflow logp 기록; 과거11회 강제없음 |
+| 29 | `f0b585096fecb8681af14791baf3f85b0d67cdfa` | 입력bit383→출력bit1 고정가설: rounds2/4/8/12/16×8dataset×16384쌍40검정 완료; Wilson99·정확양측이항·Bonferroni40·underflow logp 기록; 과거11회 강제없음 |
+| 30 | 이 행을 포함한 커밋 | AD/M길이0..33 및 독립3×3패턴10404쌍 실제 흡수전/후 state·domain·빈tail 전부대조; 프레임역해독/중복검사·정상코어 nonce재사용 첫블록XOR 대조 |
