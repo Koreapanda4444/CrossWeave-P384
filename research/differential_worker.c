@@ -1,5 +1,6 @@
 #include "crossweave_internal.h"
 #include "check.h"
+#include "binary_io.h"
 #include <string.h>
 static void delta(uint8_t d[48],unsigned index){
     static const unsigned bits[8]={0,1,7,15,31,32,47,63};memset(d,0,48);
@@ -8,7 +9,7 @@ static void delta(uint8_t d[48],unsigned index){
     else memset(d,255,48);
 }
 int main(int argc,char **argv){
-    CHECK(argc==4);char *end;unsigned long rounds=strtoul(argv[1],&end,10);CHECK(!*end && rounds<=16);
+    research_binary_stdin();CHECK(argc==4);char *end;unsigned long rounds=strtoul(argv[1],&end,10);CHECK(!*end && rounds<=16);
     unsigned long index=strtoul(argv[2],&end,10);CHECK(!*end && index<55);
     unsigned long n=strtoul(argv[3],&end,10);CHECK(!*end && n>0 && n<=16384);
     size_t counts[384]={0};uint8_t mask[48],a[48],b[48];delta(mask,(unsigned)index);

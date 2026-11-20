@@ -1,4 +1,4 @@
-import math,pathlib,sys,tempfile,time
+import math,pathlib,sys,tempfile,time,json,subprocess
 from common import ROOT,samples,sample_input
 from experiments import delta,count,statistics,search
 sys.path.insert(0,str(ROOT/'tests'))
@@ -23,3 +23,7 @@ with tempfile.TemporaryDirectory() as tmp:
     result=search(sys.argv[1],time.monotonic(),pathlib.Path(tmp)/'interrupted.json')
     assert result['status']=='incomplete' and result['completed']==dict(discovery=0,holdout=0)
 print('55 deltas, 384-bit numbering, independent C/Python counts, seed separation, statistics boundaries and budget checkpoint passed')
+
+raw=bytes(range(256))+bytes(128)
+actual=json.loads(subprocess.check_output([sys.argv[1],'0','0','8'],input=raw))
+assert actual==[8]+[0]*383

@@ -1,8 +1,9 @@
 #include "crossweave_internal.h"
 #include "check.h"
+#include "binary_io.h"
 #include <stdlib.h>
 int main(int argc,char **argv){
-    CHECK(argc==4);char *end;unsigned long r=strtoul(argv[1],&end,10);CHECK(!*end && r<16);
+    research_binary_stdin();CHECK(argc==4);char *end;unsigned long r=strtoul(argv[1],&end,10);CHECK(!*end && r<16);
     unsigned long i=strtoul(argv[2],&end,10);CHECK(!*end && i<6);
     unsigned long n=strtoul(argv[3],&end,10);CHECK(!*end && n>0 && n<=16384);
     const uint64_t m=UINT64_C(1)<<63;size_t ah[2]={0},bh[2]={0},bothh[4]={0};

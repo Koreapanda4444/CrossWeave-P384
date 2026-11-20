@@ -57,4 +57,5 @@
 | 29 | `f0b585096fecb8681af14791baf3f85b0d67cdfa` | 입력bit383→출력bit1 고정가설: rounds2/4/8/12/16×8dataset×16384쌍40검정 완료; Wilson99·정확양측이항·Bonferroni40·underflow logp 기록; 과거11회 강제없음 |
 | 30 | `bb9fb443668e5db9a1431443bc31d232565c496f` | AD/M길이0..33 및 독립3×3패턴10404쌍 실제 흡수전/후 state·domain·빈tail 전부대조; 프레임역해독/중복검사·정상코어 nonce재사용 첫블록XOR 대조 |
 | 31 | `e0938149d0b8514e33ad69b4f42caadbf54b586c` | research-smoke/full complete(전체예산1800초 중13.30초); 국소96위치·고정40·discovery330·holdout12·프레이밍10404 전량완료; 소스/실행파일지문·가정/범위/미탐색·선정JSON 기록; testingOFF 연구build 확인 |
-| 31-fix | 이 행을 포함한 커밋 | 연구 target에서 OpenSSL 헤더를 직접 사용하는 omitted_ad에 명시 OpenSSL::Crypto 연결; Linux 기본 include가 숨긴 macOS/Windows CI 실패 수정 |
+| 31-fix | `c0892348c650200dbd961a98692cdcc4e7fbc8e5` | 연구 target에서 OpenSSL 헤더를 직접 사용하는 omitted_ad에 명시 OpenSSL::Crypto 연결; Linux 기본 include가 숨긴 macOS/Windows CI 실패 수정 |
+| 31-fix2 | 이 행을 포함한 커밋 | Windows CRT text stdin의 CRLF/0x1a 변환으로 raw 연구 stream 단축 발견; 두 binary worker에만 O_BINARY 적용·0..255 byte 회귀 추가 |
