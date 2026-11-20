@@ -58,4 +58,5 @@
 | 30 | `bb9fb443668e5db9a1431443bc31d232565c496f` | AD/M길이0..33 및 독립3×3패턴10404쌍 실제 흡수전/후 state·domain·빈tail 전부대조; 프레임역해독/중복검사·정상코어 nonce재사용 첫블록XOR 대조 |
 | 31 | `e0938149d0b8514e33ad69b4f42caadbf54b586c` | research-smoke/full complete(전체예산1800초 중13.30초); 국소96위치·고정40·discovery330·holdout12·프레이밍10404 전량완료; 소스/실행파일지문·가정/범위/미탐색·선정JSON 기록; testingOFF 연구build 확인 |
 | 31-fix | `c0892348c650200dbd961a98692cdcc4e7fbc8e5` | 연구 target에서 OpenSSL 헤더를 직접 사용하는 omitted_ad에 명시 OpenSSL::Crypto 연결; Linux 기본 include가 숨긴 macOS/Windows CI 실패 수정 |
-| 31-fix2 | 이 행을 포함한 커밋 | Windows CRT text stdin의 CRLF/0x1a 변환으로 raw 연구 stream 단축 발견; 두 binary worker에만 O_BINARY 적용·0..255 byte 회귀 추가 |
+| 31-fix2 | `9c86cc61192ec2ae4da9acdb079d8b958f20affc` | Windows CRT text stdin의 CRLF/0x1a 변환으로 raw 연구 stream 단축 발견; 두 binary worker에만 O_BINARY 적용·0..255 byte 회귀 추가 |
+| 32 | 이 행을 포함한 커밋 | 단조시계·API포함지연·P12/P16·AD0/32/1024×메시지6크기; warmup후5표본·checksum·freshkey/카운터nonce·인증실패시간/출력불변·환경/메모리/객체크기 JSON 실측 |
