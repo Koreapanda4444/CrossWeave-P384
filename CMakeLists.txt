@@ -137,3 +137,8 @@ if(BUILD_TESTING)
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/check_differential.py $<TARGET_FILE:aead_runner> --output ${CMAKE_CURRENT_BINARY_DIR}/aead-differential.json
     DEPENDS vector_runner aead_runner VERBATIM)
 endif()
+if(BUILD_TESTING)
+  cw_test(boundaries tests/boundaries.c)
+  target_link_libraries(boundaries PRIVATE crossweave)
+  set_tests_properties(boundaries PROPERTIES LABELS large TIMEOUT 240)
+endif()
