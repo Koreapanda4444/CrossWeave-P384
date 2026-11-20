@@ -221,3 +221,12 @@ if(BUILD_TESTING)
   cw_test(baseline_api tests/baseline_api.c bench/baselines.c)
   target_include_directories(baseline_api PRIVATE bench)
 endif()
+if(CRYPTO_BUILD_BENCHMARKS)
+  add_custom_target(benchmark-smoke
+    COMMAND $<TARGET_FILE:crossweave_benchmark> P12 0 0
+    COMMAND $<TARGET_FILE:crossweave_benchmark> P16 0 0
+    COMMAND $<TARGET_FILE:crossweave_benchmark> CrossWeave 32 16
+    COMMAND $<TARGET_FILE:crossweave_benchmark> AES-128-GCM 32 16
+    COMMAND $<TARGET_FILE:crossweave_benchmark> ChaCha20-Poly1305 32 16
+    DEPENDS crossweave_benchmark VERBATIM)
+endif()

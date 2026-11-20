@@ -35,7 +35,7 @@ int main(int argc,char **argv){
             for(size_t i=0;i<iterations;++i){CHECK(permutation(s,48,s,48)==CROSSWEAVE_OK);sink+=(uint64_t)s[0];}
             encryption[sample]=(now()-start)*1e9/(double)iterations;
         }
-        printf("{\"algorithm\":\"%s\",\"iterations\":%zu,\"latency_ns\":",algorithm,iterations);numbers(encryption);printf(",\"checksum\":%llu}\n",(unsigned long long)sink);return 0;
+        printf("{\"algorithm\":\"%s\",\"iterations\":%zu,\"warmup_calls\":32,\"latency_ns\":",algorithm,iterations);numbers(encryption);printf(",\"checksum\":%llu}\n",(unsigned long long)sink);return 0;
     }
     const bench_api *api=strcmp(algorithm,"CrossWeave")==0?&cw:bench_baseline(algorithm);CHECK(api!=NULL);
     uint8_t key[32],tag[16],badtag[16];CHECK(RAND_bytes(key,(int)api->key_bytes)==1);
@@ -54,7 +54,7 @@ int main(int argc,char **argv){
         start=now();for(size_t i=0;i<iterations;++i){CHECK(api->decrypt(out,c,n,badtag,ad,a,last,key)==7);sink+=7u;}failure[sample]=(now()-start)*1e9/(double)iterations;
         for(size_t i=0;i<n;++i)CHECK(out[i]==0xa5);
     }
-    printf("{\"algorithm\":\"%s\",\"key_bytes\":%zu,\"nonce_bytes\":%zu,\"ad_bytes\":%zu,\"message_bytes\":%zu,\"iterations\":%zu,\"temporary_heap_bytes\":%zu,\"encrypt_ns\":",api->name,api->key_bytes,api->nonce_bytes,a,n,iterations,n);numbers(encryption);
+    printf("{\"algorithm\":\"%s\",\"key_bytes\":%zu,\"nonce_bytes\":%zu,\"ad_bytes\":%zu,\"message_bytes\":%zu,\"iterations\":%zu,\"temporary_heap_bytes\":%zu,\"warmup_calls\":8,\"encrypt_ns\":",api->name,api->key_bytes,api->nonce_bytes,a,n,iterations,n);numbers(encryption);
     printf(",\"decrypt_ns\":");numbers(decryption);printf(",\"failure_ns\":");numbers(failure);printf(",\"failure_output_unchanged\":true,\"checksum\":%llu}\n",(unsigned long long)sink);
     free(nonces);free(ad);free(out);free(c);free(p);return 0;
 }
