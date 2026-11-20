@@ -178,3 +178,8 @@ if(CRYPTO_BUILD_RESEARCH)
     add_test(NAME differential_experiment_contract COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/research/check_experiments.py $<TARGET_FILE:differential_worker>)
   endif()
 endif()
+if(CRYPTO_BUILD_RESEARCH)
+  add_custom_target(research-fixed
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/research/fixed_hypothesis.py $<TARGET_FILE:differential_worker> --output ${CMAKE_CURRENT_BINARY_DIR}/fixed-hypothesis.json
+    DEPENDS differential_worker VERBATIM)
+endif()
