@@ -45,4 +45,5 @@
 | 18 | `bf48c588c9e9dfe3c4c2f40460bb5b0211053999` | 고정 AEAD 146개=경계144+규범2; C/Python 암복호화·in-place·여유 capacity·빈/정배수 tail trace 일치; fixture label/index·nonce 중복없음 |
 | 19 | `8691e861fe975280cbde7a3dd12483b336272109` | API 계약799개: 길이/capacity/NULL/주소overflow 우선순위·양방향 partial overlap·모든 output/input alias·읽기 alias 허용·실제 구간 경계·실패시 arena 전체 불변 |
 | 20 | `006148f85944d9a57be152fbad4f1c55fbeb2635` | 할당/인증 실패·0/1/16/17/65B·in-place 실패 원자성·malloc(0) 회피·임시/tag/state 소거·할당해제 균형; Release20/20·ASan/UBSan20/20(LSan 환경제약 별도 기록) |
-| 21 | 이 행을 포함한 커밋 | 고정 fixture1168개 단일 비트 변조; 분리/in-place 출력 불변; tag길이0/15/17 거부 |
+| 21 | `3d6d848a43f997a70d09033fd738d94ff8d1f415` | 고정 fixture1168개 단일 비트 변조; 분리/in-place 출력 불변; tag길이0/15/17 거부 |
+| 22 | 이 행을 포함한 커밋 | check-differential: 순열13472대조+AEAD400사례(경계144/추가256); fixture label/index·nonce·길이 JSON 기록·실패 최초차이 진단 |

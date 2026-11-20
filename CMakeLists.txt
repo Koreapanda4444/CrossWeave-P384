@@ -130,3 +130,10 @@ if(BUILD_TESTING)
   cw_test(tampering tests/tampering.c)
   target_link_libraries(tampering PRIVATE crossweave)
 endif()
+if(BUILD_TESTING)
+  add_test(NAME aead_differential COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/check_differential.py $<TARGET_FILE:aead_runner> --output ${CMAKE_CURRENT_BINARY_DIR}/aead-differential.json)
+  add_custom_target(check-differential
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/check_permutation_corpus.py $<TARGET_FILE:vector_runner>
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/check_differential.py $<TARGET_FILE:aead_runner> --output ${CMAKE_CURRENT_BINARY_DIR}/aead-differential.json
+    DEPENDS vector_runner aead_runner VERBATIM)
+endif()
